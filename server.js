@@ -4,7 +4,6 @@ const cors           = require('cors')
 
 const app            = express()
 
-const cooperating            = require('./app/routes/v1/cooperating_routes')
 // const fetch            = require('./app/routes/fetch')
 // const processor            = require('./app/routes/processor')
 
