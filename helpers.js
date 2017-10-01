@@ -13,6 +13,16 @@ helpers = {
   getLiveEvents: function() {
     return new Event({'live': 1}).fetchAll()
   },
+  getQueuedItems: function() {
+    return new Event({'live': 1}).orderBy('id').fetchAll({withRelated: [{
+      queue: function(query) {
+        query.orderBy('ts')
+      },
+      log: function(query) {
+        query.orderBy('ts', 'DESC')
+      }
+    }]})
+  },
   processEvents: function(eventsCollection) {
     // TODO return a promise
 
@@ -42,7 +52,6 @@ helpers = {
     let starterUrl = 'https://graph.facebook.com/v2.10/' + itemID + '/reactions?access_token=' + accessToken + '&limit=10'
     return new Promise(function(resolve,reject){
       function getReactionsPage(url) {
-        console.log(itemID, url)
         axios.get(url)
           .then(response => {
             reactions = reactions.concat(response.data.data)
