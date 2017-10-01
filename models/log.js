@@ -1,8 +1,8 @@
 const bookshelf = require('../db')
 require('./event')
 
-module.exports = bookshelf.model('Queue', {
-  tableName: 'queue',
+module.exports = bookshelf.model('Log', {
+  tableName: 'log',
   event: function() {
     return this.belongsTo('Event');
   }
