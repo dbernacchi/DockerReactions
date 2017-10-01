@@ -40,19 +40,24 @@ helpers = {
   getReactions: function(itemID) {
     let reactions = []
     let starterUrl = 'https://graph.facebook.com/v2.10/' + itemID + '/reactions?access_token=' + accessToken + '&limit=10'
-    const getReactionsPage = url => axios.get(url)
-      .then(response => {
-        reactions = reactions.concat(response.data.data)
-        if(response.data['paging']['next']) {
-          return getReactionsPage(response.data.paging.next)
-        } else {
-          return reactions
+    return new Promise(function(resolve,reject){
+      function getReactionsPage(url) {
+        console.log(itemID, url)
+        axios.get(url)
+          .then(response => {
+            reactions = reactions.concat(response.data.data)
+            if(response.data['paging']['next']) {
+              getReactionsPage(response.data.paging.next)
+            } else {
+              resolve(reactions)
+            }
+          })
+          .catch(error => {
+            reject(itemID + 'failed')
+          })
         }
-      })
-      .catch(error => {
-        reject(error)
-      })
-    return getReactionsPage(starterUrl)
+      getReactionsPage(starterUrl)
+    })
   }
 }
 
