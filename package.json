@@ -1,0 +1,32 @@
+{
+  "name": "docker-reactions",
+  "version": "1.0.0",
+  "description": "a web UI to track FB reactions for a given FB Live event",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbernacchi/DockerReactions.git"
+  },
+  "author": "Timothy Nott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dbernacchi/DockerReactions/issues"
+  },
+  "homepage": "https://github.com/dbernacchi/DockerReactions#readme",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
+    "bookshelf": "^0.10.4",
+    "cors": "^2.8.4",
+    "express": "^4.15.3",
+    "knex": "^0.13.0",
+    "mysql2": "^1.3.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
