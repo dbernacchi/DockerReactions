@@ -1,9 +1,21 @@
 const axios = require('axios')
+
+const Queue = require('./models/queue')
+const Event = require('./models/event')
+
 const accessToken = '350787432040190|2tcZ-CcIcjvAjRn34FrmCgE1Yuw'
 const reactionTypes = ['NONE', 'LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY', 'THANKFUL', 'PRIDE']
+
 helpers = {
   test: function() {
     return 'go!'
+  },
+  getLiveEvents: function() {
+    return new Event({'live': 1}).fetchAll()
+  },
+  processEvents: function(eventsCollection) {
+    // TODO return a promise
+
   },
   getItemIdFromURL: function(url) {
     // example https://www.facebook.com/4ffrf/videos/10155842254339728/
@@ -26,12 +38,10 @@ helpers = {
     return url.replace(/\u00257C/,"|")
   },
   getReactions: function(itemID) {
-    console.log('starting getReactions')
     let reactions = []
     let starterUrl = 'https://graph.facebook.com/v2.10/' + itemID + '/reactions?access_token=' + accessToken + '&limit=10'
     const getReactionsPage = url => axios.get(url)
       .then(response => {
-        console.log('successful request', response)
         reactions = reactions.concat(response.data.data)
         if(response.data['paging']['next']) {
           return getReactionsPage(response.data.paging.next)
@@ -40,11 +50,8 @@ helpers = {
         }
       })
       .catch(error => {
-        console.log('unsuccessful request', error)
         reject(error)
       })
-    console.log('starting recursion')
-
     return getReactionsPage(starterUrl)
   }
 }
