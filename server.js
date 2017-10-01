@@ -4,8 +4,8 @@ const cors           = require('cors')
 
 const app            = express()
 
-// const fetch            = require('./app/routes/fetch')
-// const processor            = require('./app/routes/processor')
+const fetch            = require('./routes/fetch')
+// const processor            = require('./routes/processor')
 
 app.use(cors())
 app.use(bodyParser.urlencoded({
@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 
 const port = 7000
 
-// app.use('/fetch', fetch);
+app.use('/fetch', fetch);
 // app.use('/processor', processor);
 
 // error handlers
