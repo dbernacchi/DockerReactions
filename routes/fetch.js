@@ -69,6 +69,7 @@ router.get('/process', (req, res) => {
           // if the item is after 'log.ts', create a log for it based on diff from log values
           if(items.models[j]){
             // see previous comment
+            // uploading current state of work in case of disaster
           }
         }
       }
