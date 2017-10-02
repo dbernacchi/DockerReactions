@@ -1,6 +1,5 @@
 const axios = require('axios')
 
-const Queue = require('./models/queue')
 const Event = require('./models/event')
 
 const accessToken = '350787432040190|2tcZ-CcIcjvAjRn34FrmCgE1Yuw'
@@ -12,20 +11,6 @@ helpers = {
   },
   getLiveEvents: function() {
     return new Event({'live': 1}).fetchAll()
-  },
-  getQueuedItems: function() {
-    return new Event({'live': 1}).orderBy('id').fetchAll({withRelated: [{
-      queue: function(query) {
-        query.orderBy('ts')
-      },
-      log: function(query) {
-        query.orderBy('ts', 'DESC')
-      }
-    }]})
-  },
-  processEvents: function(eventsCollection) {
-    // TODO return a promise
-
   },
   getItemIdFromURL: function(url) {
     // example https://www.facebook.com/4ffrf/videos/10155842254339728/
@@ -49,7 +34,7 @@ helpers = {
   },
   getReactions: function(itemID) {
     let reactions = []
-    let starterUrl = 'https://graph.facebook.com/v2.10/' + itemID + '/reactions?access_token=' + accessToken + '&limit=10'
+    let starterUrl = 'https://graph.facebook.com/v2.10/' + itemID + '/reactions?access_token=' + accessToken + '&limit=5000'
     return new Promise(function(resolve,reject){
       function getReactionsPage(url) {
         axios.get(url)
