@@ -7,7 +7,8 @@ const Log = require('../models/log')
 const helpers = require('../helpers')
 
 router.get('/:id/:startTime/:endTime', (req, res) => {
-  new Log({event_id: req.params.id})
+  new Log()
+    .where('event_id', '=', req.params.id)
     .where('ts', '>=', req.params.startTime)
     .where('ts', '<=', req.params.endTime)
     .fetchAll()
