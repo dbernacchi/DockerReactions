@@ -39,7 +39,7 @@ export default {
       isLoading: true,
       endTime: '',
       startTime: '',
-      urlBase: 'http://localhost:7000/',
+      urlBase: '/',
       logs: [],
       event: {
         name: ''
