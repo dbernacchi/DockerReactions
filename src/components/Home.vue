@@ -3,7 +3,7 @@
     <h2>Events</h2>
     <div class="uk-accordion-content">
       <ul class="uk-margin-left uk-margin-right uk-list uk-list-divider">
-        <li class="clickable" v-for="(event, index) in events" :key="index"><!--  @click="flightClick(league.name)"> -->
+        <li class="clickable" v-for="(event, index) in events" :key="index" @click="go(event)">
           {{ event.name }}
         </li>
       </ul>
@@ -35,6 +35,9 @@ export default {
     this.fetchEvents()
   },
   methods: {
+    go(event) {
+      this.$router.push({ name: 'Events', params: { id: event.id, name: event.name }})
+    },
     fetchEvents() {
       let self = this
       axios.get(self.urlBase + 'events')
