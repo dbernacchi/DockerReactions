@@ -5,7 +5,7 @@ const Event = require('./models/event')
 const accessToken = '350787432040190|2tcZ-CcIcjvAjRn34FrmCgE1Yuw'
 const reactionTypes = ['NONE', 'LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY', 'THANKFUL', 'PRIDE']
 
-helpers = {
+var helpers = {
   test: function() {
     return 'go!'
   },
