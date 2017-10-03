@@ -26,7 +26,7 @@ export default {
   data () {
     return {
       isLoading: true,
-      urlBase: 'http://localhost:7000/',
+      urlBase: '/',
       events: []
     }
   },
