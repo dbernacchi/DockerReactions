@@ -4,8 +4,10 @@
   "description": "a web UI to track FB reactions for a given FB Live event",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run server | npm run vue",
+    "server": "pm2 start server.js --watch --name server",
+    "vue": "cross-env NODE_ENV=development pm2 start webpack-dev-server --name vue -- --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "repository": {
     "type": "git",
@@ -25,9 +27,21 @@
     "express": "^4.15.3",
     "fbgraph": "^1.4.1",
     "knex": "^0.13.0",
-    "mysql2": "^1.3.6"
+    "mysql2": "^1.3.6",
+    "vue": "^2.4.4",
+    "vue-router": "^2.7.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "pm2": "^2.7.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
   }
 }
