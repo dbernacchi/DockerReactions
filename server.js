@@ -17,6 +17,9 @@ const port = 7000
 
 app.use('/fetch', fetch);
 app.use('/events', events);
+app.use(express.static('public'))
+app.use('/dist', express.static('dist'))
+
 
 // error handlers
 if (app.get('env') === 'development') {
