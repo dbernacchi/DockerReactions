@@ -5,7 +5,7 @@ const cors           = require('cors')
 const app            = express()
 
 const fetch            = require('./routes/fetch')
-// const processor            = require('./routes/processor')
+const events            = require('./routes/events')
 
 app.use(cors())
 app.use(bodyParser.urlencoded({
@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 const port = 7000
 
 app.use('/fetch', fetch);
-// app.use('/processor', processor);
+app.use('/events', events);
 
 // error handlers
 if (app.get('env') === 'development') {
