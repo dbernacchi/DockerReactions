@@ -26,4 +26,7 @@ export default {
   #app > div {
     margin: 100px 20px 170px;
   }
+  .clickable {
+    cursor: pointer;
+  }
 </style>
