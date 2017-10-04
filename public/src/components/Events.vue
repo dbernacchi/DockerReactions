@@ -49,7 +49,7 @@ export default {
       endDate: '',
       startTime: '00:00',
       startDate: '',
-      urlBase: 'http://localhost:7000/',
+      urlBase: '/',
       logs: [],
       event: {
         name: ''
