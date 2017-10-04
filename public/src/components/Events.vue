@@ -78,10 +78,10 @@ export default {
   },
   computed: {
     startDateTime () {
-      return this.startDate + ' ' + this.startTime
+      return this.startDate + 'T' + this.startTime
     },
     endDateTime () {
-      return this.endDate + ' ' + this.endTime
+      return this.endDate + 'T' + this.endTime
     },
     validUpdateForm () {
       if(this.startDateTime < this.endDateTime) {
@@ -97,10 +97,14 @@ export default {
       }
       return i
     },
+    convertDateToUTC (dateString) {
+      let date = new Date(Date.parse(dateString))
+      return date.getUTCFullYear() + '-' + this.addZero(date.getUTCMonth() + 1) + '-' + this.addZero(date.getUTCDate()) + ' ' + this.addZero(date.getUTCHours()) + ':' + this.addZero(date.getUTCMinutes()) + ':' + this.addZero(date.getUTCSeconds())
+    },
     update () {
       self = this
       self.isLoading = true
-      axios.get(self.urlBase + 'events/' + self.$route.params.id + '/' + self.startDateTime + '/' + self.endDateTime)
+      axios.get(self.urlBase + 'events/' + self.$route.params.id + '/' + this.convertDateToUTC(self.startDateTime) + '/' + this.convertDateToUTC(self.endDateTime))
         .then( response => {
           let maxIndex = response.data.logs.length - 1
           for(let reaction in self.reactions) {
