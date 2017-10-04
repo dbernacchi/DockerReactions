@@ -5,10 +5,18 @@
       <form>
         <fieldset class="uk-fieldset">
           <div class="uk-margin">
-            <input id="startTime" class="uk-input" :class="{'uk-form-danger': startTime.length == 0}" type="text" placeholder="Start Date/Time" v-model="startTime">
+            <legend class="uk-legend">Start</legend>
+            <div uk-grid>
+              <div><input id="date" type="date" class="uk-input" v-model="startDate"></div>
+              <div><input id="time" type="time" class="uk-input" :class="{'uk-form-danger': startTime.length == 0}" v-model="startTime"></div>
+            </div>
           </div>
           <div class="uk-margin">
-            <input id="endTime" class="uk-input" :class="{'uk-form-danger': endTime.length == 0}" type="text" placeholder="End Date/Time" v-model="endTime">
+            <legend class="uk-legend">End</legend>
+            <div uk-grid>
+              <div><input id="date" type="date" class="uk-input" v-model="endDate"></div>
+              <div><input id="time" type="time" class="uk-input" :class="{'uk-form-danger': endTime.length == 0}" v-model="endTime"></div>
+            </div>
           </div>
           <button :disabled="!validUpdateForm" :class="{ 'uk-button-primary': validUpdateForm, 'uk-button-disabled': !validUpdateForm }" class="uk-button uk-button-primary" v-on:click="update()" v-if="!isLoading">Update info</button>
         </fieldset>
@@ -37,9 +45,11 @@ export default {
   data () {
     return {
       isLoading: true,
-      endTime: '',
-      startTime: '',
-      urlBase: '/',
+      endTime: '00:00',
+      endDate: '',
+      startTime: '00:00',
+      startDate: '',
+      urlBase: 'http://localhost:7000/',
       logs: [],
       event: {
         name: ''
@@ -58,22 +68,39 @@ export default {
     }
   },
   mounted () {
+    let start = new Date()
+    this.startDate = start.getFullYear() + '-' + this.addZero(start.getMonth() + 1) + '-' + this.addZero(start.getDate())
+    this.startTime = this.addZero(start.getHours()) + ':' + this.addZero(start.getMinutes())
+    this.endDate = this.startDate
+    this.endTime = this.startTime
     this.event.name = this.$route.params.name
     this.isLoading = false
   },
   computed: {
+    startDateTime () {
+      return this.startDate + ' ' + this.startTime
+    },
+    endDateTime () {
+      return this.endDate + ' ' + this.endTime
+    },
     validUpdateForm () {
-      if(this.endTime.length > 0 && this.startTime.length > 0) {
+      if(this.startDateTime < this.endDateTime) {
         return true
       }
       return false
     }
   },
   methods: {
+    addZero (i) {
+      if(i < 10) {
+        return '0' + i
+      }
+      return i
+    },
     update () {
       self = this
       self.isLoading = true
-      axios.get(self.urlBase + 'events/' + self.$route.params.id + '/' + self.startTime + '/' + self.endTime)
+      axios.get(self.urlBase + 'events/' + self.$route.params.id + '/' + self.startDateTime + '/' + self.endDateTime)
         .then( response => {
           let maxIndex = response.data.logs.length - 1
           for(let reaction in self.reactions) {
